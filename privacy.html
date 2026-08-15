@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy Policy - Padly</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FAF8F5',
+                        'paper-dark': '#121215',
+                        accent: '#2563EB'
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAF8F5;
+            color: #18181B;
+            background-image: radial-gradient(#E2DCD2 0.75px, transparent 0.75px);
+            background-size: 24px 24px;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Plus Jakarta Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .dark body {
+            background-color: #121215;
+            color: #F4F4F5;
+            background-image: radial-gradient(#27272A 0.75px, transparent 0.75px);
+        }
+
+        .paper-card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+            border: 1px solid #EAE5DC;
+        }
+
+        .dark .paper-card {
+            background: #1C1C20;
+            border-color: #27272A;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+        }
+
+        .lang-btn {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lang-btn.active {
+            background-color: #FFFFFF;
+            color: #000000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .dark .lang-btn.active {
+            background-color: #27272A;
+            color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
+
+    <div class="w-full max-w-2xl mx-auto">
+        
+        <header class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+            <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition group">
+                <span class="group-hover:-translate-x-0.5 transition-transform">←</span>
+                <span id="backBtnText">Ana Sayfaya Dön</span>
+            </a>
+
+            <!-- Language Switcher & Dark Mode Toggle -->
+            <div class="flex items-center gap-2">
+                <div class="bg-stone-200/60 dark:bg-zinc-900 p-1 rounded-xl flex items-center gap-0.5 border border-stone-300/40 dark:border-zinc-800">
+                    <button onclick="setLanguage('tr')" class="lang-btn tr-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">TR</button>
+                    <button onclick="setLanguage('en')" class="lang-btn en-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">EN</button>
+                    <button onclick="setLanguage('de')" class="lang-btn de-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">DE</button>
+                </div>
+
+                <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-stone-200/60 dark:bg-zinc-900 border border-stone-300/40 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition">
+                    <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- ==================== TURKISH PRIVACY POLICY ==================== -->
+        <main id="tr" class="content-section">
+            <div class="paper-card p-6 sm:p-8 mb-8">
+                <div class="flex items-center gap-3 border-b border-stone-200/80 dark:border-zinc-800 pb-5 mb-6">
+                    <img src="logo.png" alt="Padly Logo" class="w-10 h-10 rounded-xl border border-black/5 dark:border-white/10 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/2563EB/ffffff?text=Padly';">
+                    <div>
+                        <h1 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight">Gizlilik Politikası</h1>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Son Güncelleme: 16 Ağustos 2026</p>
+                    </div>
+                </div>
+
+                <div class="text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
+                    <p>
+                        <strong>Padly</strong> olarak kişisel verilerinizin gizliliğine ve güvenliğine önem veriyoruz. Uygulamamız "Önce Gizlilik" (Privacy-First) prensibine uygun olarak geliştirilmiştir.
+                    </p>
+
+                    <div class="p-4 bg-stone-100 dark:bg-zinc-800/60 rounded-xl border border-stone-200 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 text-xs font-medium">
+                        <strong>Özet:</strong> Padly verilerinizi asla harici sunuculara yüklemez, reklam hedeflemesi yapmaz ve 3. taraflarla paylaşmaz. Bütün verileriniz yalnızca kendi cihazınızda ve kişisel Apple iCloud hesabınızda saklanır.
+                    </div>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">1. Toplanan Veriler ve Kullanım Amaçları</h2>
+                    <p>Padly, kullanıcıların günlük yapılacaklar listelerini oluşturmalarını, elle çizerek görev tamamlamalarını ve kişisel planlama yapmalarını sağlayan bir uygulamadır.</p>
+                    <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+                        <li><strong>Görev İçerikleri ve Çizimler:</strong> Oluşturduğunuz görev metinleri ve çizimler yalnızca uygulama işlevselliği amacıyla saklanır.</li>
+                        <li><strong>Hesap Bilgileri:</strong> Üyelik, e-posta adresi veya şifre istenmez. Uygulama, cihazınızın mevcut Apple ID ve iCloud yapısını kullanır.</li>
+                    </ul>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">2. iCloud Depolama ve Senkronizasyon</h2>
+                    <p>
+                        Cihazlarınız arasında görevlerinizi eşzamanlamak için Apple'ın resmi <strong>iCloud (CloudKit)</strong> altyapısı kullanılır. Bu veriler Apple'ın uçtan uca şifrelemeyle korunan sunucularında saklanır.
+                    </p>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">3. Verilerinizi Tamamen Silme Hakkı</h2>
+                    <p>
+                        İstediğiniz an tüm verilerinizi ve görev geçmişinizi tamamen yok edebilirsiniz:
+                    </p>
+                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs">
+                        Uygulama İçi Yol: Ayarlar (Çark Simgesi) → "Tüm Verileri Sil"
+                    </div>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">4. Üçüncü Taraf Analitik ve Reklamlar</h2>
+                    <p>
+                        Padly içerisinde üçüncü taraf reklam ağları veya kullanıcı hareketlerini izleyen analitik yazılımları kesinlikle bulunmamaktadır.
+                    </p>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">5. İletişim</h2>
+                    <p>
+                        Sorularınız için bizimle iletişime geçebilirsiniz:
+                        <a href="mailto:yadatechnologiesofficial@gmail.com" class="text-blue-600 dark:text-blue-400 underline font-medium">yadatechnologiesofficial@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- ==================== ENGLISH PRIVACY POLICY ==================== -->
+        <main id="en" class="content-section">
+            <div class="paper-card p-6 sm:p-8 mb-8">
+                <div class="flex items-center gap-3 border-b border-stone-200/80 dark:border-zinc-800 pb-5 mb-6">
+                    <img src="logo.png" alt="Padly Logo" class="w-10 h-10 rounded-xl border border-black/5 dark:border-white/10 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/2563EB/ffffff?text=Padly';">
+                    <div>
+                        <h1 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight">Privacy Policy</h1>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Last Updated: August 16, 2026</p>
+                    </div>
+                </div>
+
+                <div class="text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
+                    <p>
+                        At <strong>Padly</strong>, your privacy is our primary commitment. Our app is designed around a strict "Privacy First" standard.
+                    </p>
+
+                    <div class="p-4 bg-stone-100 dark:bg-zinc-800/60 rounded-xl border border-stone-200 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 text-xs font-medium">
+                        <strong>In Short:</strong> Padly never uploads your data to external servers, never tracks you for advertising, and never sells data. Your tasks remain solely on your device and inside your Apple iCloud storage.
+                    </div>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">1. Data Collection & Usage</h2>
+                    <p>Padly enables users to organize daily tasks and strike off completed items with hand-drawing gestures.</p>
+                    <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+                        <li><strong>Task Content & Sketches:</strong> Stored locally for core app functionality.</li>
+                        <li><strong>No Registration Required:</strong> The app relies on Apple's native device infrastructure.</li>
+                    </ul>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">2. Apple iCloud Syncing</h2>
+                    <p>
+                        To keep tasks synced across your Apple devices, Padly utilizes Apple's official <strong>iCloud (CloudKit)</strong> framework.
+                    </p>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">3. Complete Data Deletion</h2>
+                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs">
+                        In-App Path: Settings → "Delete All Data"
+                    </div>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">4. Contact Information</h2>
+                    <p>
+                        Inquiries can be directed to: <a href="mailto:yadatechnologiesofficial@gmail.com" class="text-blue-600 dark:text-blue-400 underline font-medium">yadatechnologiesofficial@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- ==================== GERMAN PRIVACY POLICY ==================== -->
+        <main id="de" class="content-section">
+            <div class="paper-card p-6 sm:p-8 mb-8">
+                <div class="flex items-center gap-3 border-b border-stone-200/80 dark:border-zinc-800 pb-5 mb-6">
+                    <img src="logo.png" alt="Padly Logo" class="w-10 h-10 rounded-xl border border-black/5 dark:border-white/10 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/2563EB/ffffff?text=Padly';">
+                    <div>
+                        <h1 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight">Datenschutzerklärung</h1>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Zuletzt aktualisiert: 16. August 2026</p>
+                    </div>
+                </div>
+
+                <div class="text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
+                    <p>
+                        Bei <strong>Padly</strong> hat der Schutz Ihrer Daten höchste Priorität.
+                    </p>
+                    <p>Ihre Aufgaben und Zeichnungen verbleiben lokal auf Ihrem Gerät und in Ihrem persönlichen Apple iCloud-Speicher.</p>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">Datenlöschung</h2>
+                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs">
+                        Pfad zur Löschung: Einstellungen → "Alle Daten löschen"
+                    </div>
+
+                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">Kontakt</h2>
+                    <p>E-Mail: <a href="mailto:yadatechnologiesofficial@gmail.com" class="text-blue-600 dark:text-blue-400 underline font-medium">yadatechnologiesofficial@gmail.com</a></p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mt-8 text-center text-xs text-zinc-500 dark:text-zinc-400">
+            <p>&copy; 2026 Padly. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function setLanguage(lang) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+
+            const targetSection = document.getElementById(lang);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            const activeBtn = document.querySelector('.' + lang + '-btn');
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+
+            const backBtnText = document.getElementById('backBtnText');
+            if (lang === 'tr') backBtnText.innerText = "Ana Sayfaya Dön";
+            else if (lang === 'de') backBtnText.innerText = "Zurück zur Startseite";
+            else backBtnText.innerText = "Back to Home";
+        }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        window.onload = function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            if (userLang.startsWith('de')) setLanguage('de');
+            else if (userLang.startsWith('tr')) setLanguage('tr');
+            else setLanguage('en');
+        };
+    </script>
+</body>
+</html>
