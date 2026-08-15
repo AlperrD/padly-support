@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Padly - Destek & Yardım Merkezi</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FAF8F5',
+                        'paper-dark': '#121215',
+                        'card-light': '#FFFFFF',
+                        'card-dark': '#1C1C20',
+                        'notebook-line': '#E8E2D5',
+                        'notebook-line-dark': '#27272A',
+                        accent: '#2563EB'
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Plus Jakarta Sans', 'sans-serif'],
+                        handwriting: ['Caveat', 'cursive'],
+                        sketch: ['Patrick Hand', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAF8F5;
+            color: #18181B;
+            background-image: radial-gradient(#E2DCD2 0.75px, transparent 0.75px);
+            background-size: 24px 24px;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Plus Jakarta Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .dark body {
+            background-color: #121215;
+            color: #F4F4F5;
+            background-image: radial-gradient(#27272A 0.75px, transparent 0.75px);
+        }
+
+        /* Modern paper card styling */
+        .paper-card {
+            position: relative;
+            background: #FFFFFF;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+            border: 1px solid #EAE5DC;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .dark .paper-card {
+            background: #1C1C20;
+            border-color: #27272A;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Notebook paper margin effect */
+        .margin-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 48px;
+            width: 1.5px;
+            background-color: #FCA5A5;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Clean accordion summary styling */
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details[open] .chevron-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Segmented control button styling */
+        .lang-btn {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lang-btn.active {
+            background-color: #FFFFFF;
+            color: #000000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .dark .lang-btn.active {
+            background-color: #27272A;
+            color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        canvas {
+            touch-action: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
+
+    <div class="w-full max-w-2xl mx-auto">
+        
+        <header class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-stone-200/80 dark:border-zinc-800/80">
+            <div class="flex items-center gap-3.5">
+                <!-- App Logo from logo.png with fallback icon -->
+                <div class="relative w-12 h-12 rounded-2xl overflow-hidden shadow-sm border border-black/5 dark:border-white/10 bg-stone-100 dark:bg-zinc-800 flex items-center justify-center shrink-0">
+                    <img src="logo.png" alt="Padly Logo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/120x120/2563EB/ffffff?text=Padly';">
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">Padly</h1>
+                        <span class="text-[11px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-md bg-stone-200/70 dark:bg-zinc-800 text-stone-700 dark:text-zinc-300">Daily Task</span>
+                    </div>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Destek & Yardım Merkezi</p>
+                </div>
+            </div>
+
+            <!-- Language Switcher Segmented Control & Dark Mode Toggle -->
+            <div class="flex items-center gap-2">
+                <div class="bg-stone-200/60 dark:bg-zinc-900 p-1 rounded-xl flex items-center gap-0.5 border border-stone-300/40 dark:border-zinc-800">
+                    <button onclick="setLanguage('tr')" class="lang-btn tr-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">TR</button>
+                    <button onclick="setLanguage('en')" class="lang-btn en-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">EN</button>
+                    <button onclick="setLanguage('de')" class="lang-btn de-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">DE</button>
+                </div>
+
+                <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-stone-200/60 dark:bg-zinc-900 border border-stone-300/40 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition" title="Karanlık Mod Toggle">
+                    <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="paper-card p-6 sm:p-7 mb-8 border border-stone-200/80 dark:border-zinc-800">
+            <div class="margin-line hidden sm:block"></div>
+            <div class="sm:pl-8">
+                <div class="flex items-center justify-between mb-2">
+                    <span id="demo-date-badge" class="text-base font-bold font-handwriting text-blue-600 dark:text-blue-400">15 Ağustos Cumartesi</span>
+                    <span id="interactive-tag" class="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/50 dark:border-blue-900/50">
+                        İnteraktif Önizleme
+                    </span>
+                </div>
+                
+                <h2 id="hero-title" class="text-xl font-bold text-zinc-900 dark:text-white mb-1.5 tracking-tight">
+                    Görevlerinizi elle çizerek tamamlayın.
+                </h2>
+                <p id="hero-subtitle" class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mb-5 leading-relaxed">
+                    Padly, günlük yapılacaklar listenizi tıpkı gerçek bir deftere yazar gibi kaydetmenizi ve tamamladığınızda üzerini elle çizmeyi sağlar.
+                </p>
+
+                <!-- Interactive Scratchpad Sandbox -->
+                <div class="bg-stone-50 dark:bg-zinc-900/60 rounded-2xl p-3.5 border border-stone-200/80 dark:border-zinc-800/80">
+                    <div class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-2 flex justify-between items-center">
+                        <span id="try-label">Aşağıdaki görevin üzerini parmağınızla veya fare ile çizin:</span>
+                        <button onclick="resetCanvas()" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition text-xs flex items-center gap-1" id="reset-btn">
+                            Temizle
+                        </button>
+                    </div>
+
+                    <div class="relative h-16 w-full flex items-center justify-start pl-3 overflow-hidden rounded-xl bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 shadow-sm">
+                        <!-- Red vertical notebook margin line -->
+                        <div class="absolute left-5 top-0 bottom-0 w-0.5 bg-red-300/70"></div>
+                        <span id="sample-task" class="pl-7 text-sm sm:text-base font-semibold font-sketch text-zinc-800 dark:text-zinc-200 select-none tracking-wide">
+                            Ders çalış ve bugünkü planı bitir
+                        </span>
+                        <!-- Overlay Canvas for Drawing -->
+                        <canvas id="scratchCanvas" class="absolute inset-0 w-full h-full cursor-crosshair z-10"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TURKISH CONTENT ==================== -->
+        <main id="tr" class="content-section">
+            
+            <!-- Value Highlights Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-8">
+                <div class="paper-card p-4 hover:border-blue-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-blue-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">iCloud Senkronizasyonu</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">Görevleriniz tüm Apple cihazlarınızda otomatik olarak güncellenir.</p>
+                </div>
+
+                <div class="paper-card p-4 hover:border-emerald-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">Sıfır Veri Takibi</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">Reklam, harici sunucu veya davranış analitiği kesinlikle kullanılmaz.</p>
+                </div>
+
+                <div class="paper-card p-4 hover:border-amber-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-amber-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">Tam Veri Kontrolü</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">Uygulama ayarlarından tüm verilerinizi anında silme özgürlüğü.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Accordion -->
+            <div class="paper-card p-6 mb-8">
+                <h2 class="text-base font-bold text-zinc-900 dark:text-white mb-5 tracking-tight border-b border-stone-200/80 dark:border-zinc-800 pb-3">
+                    Sıkça Sorulan Sorular
+                </h2>
+
+                <div class="divide-y divide-stone-200/80 dark:divide-zinc-800">
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>Padly verilerimi nerede saklıyor?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            Padly'de oluşturduğunuz tüm görevler, çizimleriniz ve kategorileriniz yalnızca cihazınızda ve kişisel <strong>iCloud</strong> hesabınızda saklanır. Harici bir web sunucusu veya veritabanı kesinlikle bulunmamaktadır.
+                        </p>
+                    </details>
+
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>Tüm verilerimi nasıl tamamen silebilirim?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            Uygulama içerisindeki <strong>Ayarlar (Çark Simgesi)</strong> ekranına giderek <strong>"Tüm Verileri Sil"</strong> butonuna basabilirsiniz. Bu işlem hem yerel cihazınızdaki verileri hem de iCloud üzerindeki tüm görev geçmişinizi kalıcı olarak siler.
+                        </p>
+                    </details>
+
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>Elle çizerek üzerini çizme özelliği nasıl çalışır?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            Listelediğiniz bir görevi tamamladığınızda parmağınızla veya Apple Pencil ile görevin üzerine bir çizik atmanız yeterlidir. Ayrıca sol taraftaki onay kutusuna dokunarak da tamamlayabilirsiniz.
+                        </p>
+                    </details>
+
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>Üye olmak veya hesap açmak gerekiyor mu?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            Hayır. Kayıt veya e-posta gerekmez. Cihazınızda oturum açmış olduğunuz Apple ID ve iCloud altyapısı otomatik olarak senkronizasyonu sağlar.
+                        </p>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="paper-card p-6 text-center border border-stone-200/80 dark:border-zinc-800">
+                <h3 class="text-base font-bold text-zinc-900 dark:text-white mb-1">Yardıma mı ihtiyacınız var?</h3>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-4 max-w-sm mx-auto">
+                    Sorularınız, görüşleriniz veya destek talepleriniz için ekibimize e-posta gönderebilirsiniz.
+                </p>
+                <a href="mailto:yadatechnologiesofficial@gmail.com?subject=Padly%20Destek%20Talebi" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 text-white text-xs font-semibold shadow-sm transition active:scale-98">
+                    İletişime Geçin
+                </a>
+            </div>
+        </main>
+
+        <!-- ==================== ENGLISH CONTENT ==================== -->
+        <main id="en" class="content-section">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-8">
+                <div class="paper-card p-4 hover:border-blue-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-blue-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">iCloud Sync</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">Your tasks remain synchronized across all your Apple devices.</p>
+                </div>
+
+                <div class="paper-card p-4 hover:border-emerald-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">Zero Tracking</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">No ads, no external database servers, and no background tracking.</p>
+                </div>
+
+                <div class="paper-card p-4 hover:border-amber-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-amber-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">Full Control</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">Instantly delete all your local and iCloud data anytime in Settings.</p>
+                </div>
+            </div>
+
+            <div class="paper-card p-6 mb-8">
+                <h2 class="text-base font-bold text-zinc-900 dark:text-white mb-5 tracking-tight border-b border-stone-200/80 dark:border-zinc-800 pb-3">
+                    Frequently Asked Questions
+                </h2>
+
+                <div class="divide-y divide-stone-200/80 dark:divide-zinc-800">
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>Where is my data stored in Padly?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            All your tasks, drawings, and daily plans are stored exclusively on your device and inside your personal <strong>Apple iCloud</strong> account. We do not operate external web servers.
+                        </p>
+                    </details>
+
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>How do I permanently delete all my data?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            Open <strong>Settings</strong> inside the app and tap <strong>"Delete All Data"</strong>. This instantly purges all local storage and synced iCloud entries.
+                        </p>
+                    </details>
+
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>How does the hand-drawing cross-out feature work?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            When you complete a task, draw a strike stroke across the text using your finger or stylus, exactly as you would on physical paper.
+                        </p>
+                    </details>
+
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>Do I need to create an account?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            No registration required. Padly uses your existing Apple ID & iCloud account seamlessly without requiring user accounts or passwords.
+                        </p>
+                    </details>
+                </div>
+            </div>
+
+            <div class="paper-card p-6 text-center border border-stone-200/80 dark:border-zinc-800">
+                <h3 class="text-base font-bold text-zinc-900 dark:text-white mb-1">Need Support?</h3>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-4 max-w-sm mx-auto">
+                    Contact our support team anytime for assistance or feedback.
+                </p>
+                <a href="mailto:yadatechnologiesofficial@gmail.com?subject=Padly%20Support%20Inquiry" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 text-white text-xs font-semibold shadow-sm transition active:scale-98">
+                    Contact Support
+                </a>
+            </div>
+        </main>
+
+        <!-- ==================== GERMAN CONTENT ==================== -->
+        <main id="de" class="content-section">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-8">
+                <div class="paper-card p-4 hover:border-blue-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-blue-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">iCloud-Sync</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">Ihre Aufgaben bleiben auf allen Apple-Geräten automatisch synchron.</p>
+                </div>
+
+                <div class="paper-card p-4 hover:border-emerald-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">Kein Tracking</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">Keine Werbung, keine externen Server und kein Tracking.</p>
+                </div>
+
+                <div class="paper-card p-4 hover:border-amber-300 dark:hover:border-zinc-700 transition">
+                    <div class="w-2 h-2 rounded-full bg-amber-500 mb-3"></div>
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-white mb-1">Volle Kontrolle</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">Löschen Sie alle Daten jederzeit mit einem Klick in den Einstellungen.</p>
+                </div>
+            </div>
+
+            <div class="paper-card p-6 mb-8">
+                <h2 class="text-base font-bold text-zinc-900 dark:text-white mb-5 tracking-tight border-b border-stone-200/80 dark:border-zinc-800 pb-3">
+                    Häufig gestellte Fragen (FAQ)
+                </h2>
+
+                <div class="divide-y divide-stone-200/80 dark:divide-zinc-800">
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>Wo werden meine Daten gespeichert?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            Alle Ihre Aufgaben und Notizen werden ausschließlich auf Ihrem Gerät sowie in Ihrem persönlichen <strong>Apple iCloud</strong> Konto gespeichert.
+                        </p>
+                    </details>
+
+                    <details class="group py-3.5 first:pt-0 last:pb-0">
+                        <summary class="flex justify-between items-center font-semibold text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition select-none">
+                            <span>Wie kann ich alle Daten löschen?</span>
+                            <svg class="chevron-icon w-4 h-4 text-zinc-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <p class="mt-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-1">
+                            Öffnen Sie die <strong>Einstellungen</strong> in der App und tippen Sie auf <strong>"Alle Daten löschen"</strong>.
+                        </p>
+                    </details>
+                </div>
+            </div>
+
+            <div class="paper-card p-6 text-center border border-stone-200/80 dark:border-zinc-800">
+                <h3 class="text-base font-bold text-zinc-900 dark:text-white mb-1">Haben Sie Fragen?</h3>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-4 max-w-sm mx-auto">
+                    Kontaktieren Sie unser Support-Team gerne per E-Mail.
+                </p>
+                <a href="mailto:yadatechnologiesofficial@gmail.com?subject=Padly%20Support%20Anfrage" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 text-white text-xs font-semibold shadow-sm transition active:scale-98">
+                    Support Kontaktieren
+                </a>
+            </div>
+        </main>
+
+        <!-- Footer section -->
+        <footer class="mt-12 text-center text-xs text-zinc-500 dark:text-zinc-400 space-y-2">
+            <p>&copy; 2026 Padly. Daily Task & Planner.</p>
+            <div class="flex items-center justify-center gap-3 font-medium">
+                <a href="privacy.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition underline underline-offset-4">Gizlilik Politikası (Privacy Policy)</a>
+                <span>•</span>
+                <a href="mailto:yadatechnologiesofficial@gmail.com" class="hover:text-blue-600 dark:hover:text-blue-400 transition underline underline-offset-4">E-Posta Desteği</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Language switching logic
+        function setLanguage(lang) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+
+            const targetSection = document.getElementById(lang);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            const activeBtn = document.querySelector('.' + lang + '-btn');
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+
+            // Dynamic translations for hero preview card
+            const demoDate = document.getElementById('demo-date-badge');
+            const heroTitle = document.getElementById('hero-title');
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            const tryLabel = document.getElementById('try-label');
+            const resetBtn = document.getElementById('reset-btn');
+            const sampleTask = document.getElementById('sample-task');
+            const interactiveTag = document.getElementById('interactive-tag');
+
+            if (lang === 'tr') {
+                demoDate.innerText = '15 Ağustos Cumartesi';
+                heroTitle.innerText = 'Görevlerinizi elle çizerek tamamlayın.';
+                heroSubtitle.innerText = 'Padly, günlük yapılacaklar listenizi tıpkı gerçek bir deftere yazar gibi kaydetmenizi ve tamamladığınızda üzerini elle çizmeyi sağlar.';
+                tryLabel.innerText = 'Aşağıdaki görevin üzerini parmağınızla veya fare ile çizin:';
+                resetBtn.innerText = 'Temizle';
+                sampleTask.innerText = 'Ders çalış ve bugünkü planı bitir';
+                interactiveTag.innerText = 'İnteraktif Önizleme';
+            } else if (lang === 'en') {
+                demoDate.innerText = 'Saturday, August 15';
+                heroTitle.innerText = 'Cross off tasks by hand-drawing.';
+                heroSubtitle.innerText = 'Padly brings your daily task list to life. Plan your day and strike off completed tasks just like on real paper.';
+                tryLabel.innerText = 'Strike out the task below using your mouse or finger:';
+                resetBtn.innerText = 'Clear';
+                sampleTask.innerText = 'Study and finish today’s agenda';
+                interactiveTag.innerText = 'Interactive Preview';
+            } else if (lang === 'de') {
+                demoDate.innerText = 'Samstag, 15. August';
+                heroTitle.innerText = 'Aufgaben manuell durchstreichen.';
+                heroSubtitle.innerText = 'Padly lässt Sie Ihre tägliche To-Do-Liste wie in ein echtes Notizbuch schreiben und erledigte Punkte manuell durchstreichen.';
+                tryLabel.innerText = 'Streichen Sie die Aufgabe mit der Maus oder dem Finger durch:';
+                resetBtn.innerText = 'Löschen';
+                sampleTask.innerText = 'Lernen und den heutigen Plan abschließen';
+                interactiveTag.innerText = 'Interaktive Vorschau';
+            }
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // Canvas Drawing Sandbox Logic
+        const canvas = document.getElementById('scratchCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            drawInitialLine();
+        }
+
+        function drawInitialLine() {
+            ctx.strokeStyle = '#2563EB';
+            ctx.lineWidth = 3.5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+
+        function resetCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            const pos = getPos(e);
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', stopDrawing);
+
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDrawing);
+
+        window.onload = function() {
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Auto detect browser language
+            const userLang = navigator.language || navigator.userLanguage;
+            if (userLang.startsWith('de')) setLanguage('de');
+            else if (userLang.startsWith('tr')) setLanguage('tr');
+            else setLanguage('en');
+        };
+    </script>
+</body>
+</html>
