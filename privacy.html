@@ -2,14 +2,24 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Privacy Policy - Padly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Gizlilik Politikası - Padly</title>
     <link rel="icon" href="logo.png" type="image/png">
+    <script>
+        // Apply the saved (or system) theme before the first paint
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('padly-theme'); } catch (e) {}
+            var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (!saved && systemDark)) document.documentElement.classList.add('dark');
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -29,6 +39,8 @@
     </script>
 
     <style>
+        html { scroll-behavior: smooth; }
+
         body {
             background-color: #FAF8F5;
             color: #18181B;
@@ -57,9 +69,44 @@
             box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
         }
 
-        .lang-btn {
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Section headings */
+        .policy h2 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #18181B;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(231, 229, 228, 0.8);
+            scroll-margin-top: 1rem;
         }
+
+        .dark .policy h2 { color: #FFFFFF; border-top-color: #27272A; }
+
+        .policy h3 {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #27272A;
+            margin-bottom: 0.25rem;
+        }
+
+        .dark .policy h3 { color: #E4E4E7; }
+
+        /* The Padly AI block */
+        .ai-block {
+            border-radius: 16px;
+            border: 1px solid #BFDBFE;
+            background: #F5F9FF;
+            padding: 1rem 1.125rem;
+        }
+
+        .dark .ai-block { border-color: rgba(30, 58, 138, 0.6); background: rgba(23, 37, 84, 0.25); }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid #2563EB;
+            outline-offset: 3px;
+            border-radius: 8px;
+        }
+
+        .lang-btn { transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
 
         .lang-btn.active {
             background-color: #FFFFFF;
@@ -73,94 +120,148 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
-        .content-section {
-            display: none;
-            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
+        .content-section { display: none; }
         .content-section.active {
             display: block;
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+
+        @media print {
+            body { background: #FFFFFF; }
+            header, footer { display: none; }
+            .paper-card { border: none; box-shadow: none; }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
 
     <div class="w-full max-w-2xl mx-auto">
-        
+
         <header class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
             <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition group">
-                <span class="group-hover:-translate-x-0.5 transition-transform">←</span>
+                <span class="group-hover:-translate-x-0.5 transition-transform" aria-hidden="true">←</span>
                 <span id="backBtnText">Ana Sayfaya Dön</span>
             </a>
 
             <!-- Language Switcher & Dark Mode Toggle -->
             <div class="flex items-center gap-2">
-                <div class="bg-stone-200/60 dark:bg-zinc-900 p-1 rounded-xl flex items-center gap-0.5 border border-stone-300/40 dark:border-zinc-800">
-                    <button onclick="setLanguage('tr')" class="lang-btn tr-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">TR</button>
-                    <button onclick="setLanguage('en')" class="lang-btn en-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">EN</button>
-                    <button onclick="setLanguage('de')" class="lang-btn de-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">DE</button>
+                <div class="bg-stone-200/60 dark:bg-zinc-900 p-1 rounded-xl flex items-center gap-0.5 border border-stone-300/40 dark:border-zinc-800" role="group" aria-label="Language">
+                    <button onclick="setLanguage('tr')" class="lang-btn tr-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white" aria-label="Türkçe">TR</button>
+                    <button onclick="setLanguage('en')" class="lang-btn en-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white" aria-label="English">EN</button>
+                    <button onclick="setLanguage('de')" class="lang-btn de-btn text-xs font-semibold px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white" aria-label="Deutsch">DE</button>
                 </div>
 
-                <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-stone-200/60 dark:bg-zinc-900 border border-stone-300/40 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition">
-                    <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2 rounded-xl bg-stone-200/60 dark:bg-zinc-900 border border-stone-300/40 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition" aria-label="Tema">
+                    <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                 </button>
             </div>
         </header>
 
         <!-- ==================== TURKISH PRIVACY POLICY ==================== -->
-        <main id="tr" class="content-section">
+        <main id="tr" class="content-section" lang="tr">
             <div class="paper-card p-6 sm:p-8 mb-8">
                 <div class="flex items-center gap-3 border-b border-stone-200/80 dark:border-zinc-800 pb-5 mb-6">
                     <img src="logo.png" alt="Padly Logo" class="w-10 h-10 rounded-xl border border-black/5 dark:border-white/10 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/2563EB/ffffff?text=Padly';">
                     <div>
                         <h1 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight">Gizlilik Politikası</h1>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Son Güncelleme: 16 Ağustos 2026</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Son Güncelleme: 14 Ekim 2026</p>
                     </div>
                 </div>
 
-                <div class="text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
+                <div class="policy text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
                     <p>
                         <strong>Padly</strong> olarak kişisel verilerinizin gizliliğine ve güvenliğine önem veriyoruz. Uygulamamız "Önce Gizlilik" (Privacy-First) prensibine uygun olarak geliştirilmiştir.
                     </p>
 
-                    <div class="p-4 bg-stone-100 dark:bg-zinc-800/60 rounded-xl border border-stone-200 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 text-xs font-medium">
-                        <strong>Özet:</strong> Padly verilerinizi asla harici sunuculara yüklemez, reklam hedeflemesi yapmaz ve 3. taraflarla paylaşmaz. Bütün görevleriniz yalnızca kendi cihazınızda ve kişisel Apple iCloud hesabınızda saklanır.
+                    <div class="p-4 bg-stone-100 dark:bg-zinc-800/60 rounded-xl border border-stone-200 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 text-xs font-medium leading-relaxed">
+                        <strong>Özet:</strong> Görevleriniz yalnızca cihazınızda ve kişisel Apple iCloud hesabınızda saklanır. Padly reklam göstermez, sizi izlemez ve verilerinizi satmaz. Yalnızca isteğe bağlı <strong>Padly AI</strong> özelliğini kullandığınızda, sorunuz ve ilgili görev bilgileri cevap üretilebilmesi için yapay zekâ hizmet sağlayıcımızla paylaşılır ve sohbetleriniz veritabanımızda saklanır. Bu verileri dilediğiniz an silebilirsiniz.
                     </div>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">1. Toplanan Veriler ve Kullanım Amaçları</h2>
+                    <h2>1. Toplanan Veriler ve Kullanım Amaçları</h2>
                     <p>Padly, kullanıcıların günlük yapılacaklar listelerini oluşturmalarını, elle çizerek görev tamamlamalarını ve kişisel planlama yapmalarını sağlayan bir uygulamadır.</p>
-                    <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
-                        <li><strong>Görev İçerikleri:</strong> Oluşturduğunuz görev metinleri yalnızca uygulama işlevselliği amacıyla kişisel iCloud hesabınızda saklanır.</li>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><strong>Görev İçerikleri:</strong> Oluşturduğunuz görevler, notlar ve çizimler yalnızca uygulama işlevselliği amacıyla cihazınızda ve kişisel iCloud hesabınızda saklanır.</li>
                         <li><strong>Hesap Bilgileri:</strong> Üyelik, e-posta adresi veya şifre istenmez. Uygulama, cihazınızın mevcut Apple ID ve iCloud yapısını kullanır.</li>
+                        <li><strong>Padly AI Verileri:</strong> Yalnızca Padly AI özelliğini kullanırsanız toplanır. Ayrıntılar 3. bölümde açıklanmıştır.</li>
                     </ul>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">2. iCloud Depolama ve Senkronizasyon</h2>
+                    <h2>2. iCloud Depolama ve Senkronizasyon</h2>
                     <p>
-                        Cihazlarınız arasında görevlerinizi eşzamanlamak için Apple'ın resmi <strong>iCloud (CloudKit)</strong> altyapısı kullanılır. Bu veriler Apple'ın uçtan uca şifrelemeyle korunan sunucularında saklanır.
+                        Cihazlarınız arasında görevlerinizi eşzamanlamak için Apple'ın resmi <strong>iCloud (CloudKit)</strong> altyapısı kullanılır. Bu veriler, iCloud hesabınıza bağlı özel veritabanınızda Apple tarafından şifrelenerek saklanır; bu verilere erişimimiz yoktur.
                     </p>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">3. Verilerinizi Tamamen Silme Hakkı</h2>
-                    <p>
-                        İstediğiniz an tüm verilerinizi ve görev geçmişinizi tamamen yok edebilirsiniz:
-                    </p>
-                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs">
-                        Uygulama İçi Yol: Ayarlar (Çark Simgesi) → "Tüm Verileri Sil"
+                    <h2 id="padly-ai">3. Padly AI (Yapay Zekâ Asistanı)</h2>
+                    <div class="ai-block space-y-4">
+                        <p class="text-xs font-semibold text-blue-800 dark:text-blue-200">
+                            Bu bölüm yalnızca Padly AI özelliğini kullanmanız hâlinde geçerlidir. Özelliği kullanmadığınız sürece hiçbir veriniz cihazınızın ve iCloud hesabınızın dışına çıkmaz.
+                        </p>
+
+                        <div>
+                            <h3>Açık onay</h3>
+                            <p>Padly AI isteğe bağlıdır ve ilk kullanımdan önce uygulama içinde gösterilen bilgilendirmeyi onaylamanızı gerektirir. Onay vermezseniz özellik çalışmaz ve aşağıdaki verilerin hiçbiri işlenmez.</p>
+                        </div>
+
+                        <div>
+                            <h3>İşlenen veriler</h3>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Padly AI'ya yazdığınız sorular ve aldığınız cevaplar,</li>
+                                <li>O sırada açık olan sayfadaki görevleriniz (başlık, adımlar, öncelik, hatırlatıcı ve göreve kayıtlı yapay zekâ notu),</li>
+                                <li>Padly AI ile önceki sohbetleriniz,</li>
+                                <li>Adınızı, e-posta adresinizi veya telefon numaranızı içermeyen anonim bir kullanıcı tanımlayıcısı; onay kaydınız, günlük kullanım sayınız ve uygulama diliniz.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3>Kullanım amacı ve paylaşım</h3>
+                            <p>Bu veriler yalnızca uygulamanın işlevselliğini sağlamak ve size daha iyi, kişiselleştirilmiş hizmet verebilmek amacıyla işlenir. Cevabın üretilebilmesi için güvenli (şifreli) bir bağlantı üzerinden yapay zekâ hizmet sağlayıcımıza iletilir ve sohbet geçmişinizi size sunabilmek için bulut veritabanımızda saklanır. Verileriniz reklam amacıyla kullanılmaz, satılmaz ve bu amaç dışında üçüncü taraflarla paylaşılmaz. Hizmet sağlayıcılarımız bu verileri bulunduğunuz ülkenin dışındaki sunucularda işleyebilir.</p>
+                        </div>
+
+                        <div>
+                            <h3>Saklama süresi</h3>
+                            <p>Sohbetleriniz, önceki konuşmalarınıza devam edebilmeniz için yalnızca siz silene kadar saklanır. Sildiğiniz her sohbet sunucularımızdan kalıcı olarak kaldırılır.</p>
+                        </div>
+
+                        <div>
+                            <h3>Önemli not</h3>
+                            <p>Yapay zekâ hatalı veya eksik cevaplar üretebilir. Lütfen sorularınıza şifre, sağlık veya finans bilgisi gibi hassas bilgiler yazmayın.</p>
+                        </div>
                     </div>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">4. Üçüncü Taraf Analitik ve Reklamlar</h2>
+                    <h2>4. Verilerinizi Silme Hakkı</h2>
+                    <p>Verileriniz üzerinde tam kontrole sahipsiniz. Dilediğiniz an, herhangi bir gerekçe göstermeden aşağıdaki işlemleri uygulama içinden yapabilirsiniz:</p>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><strong>Tek bir sohbeti silme:</strong> Padly AI → Önceki Sohbetler ekranında ilgili sohbeti silebilirsiniz. Sohbet sunucularımızdan kalıcı olarak kaldırılır.</li>
+                        <li><strong>Tüm sohbetleri ve Padly AI hesabını silme:</strong> Padly AI → Önceki Sohbetler ekranındaki "Padly AI Verilerimi Sil" seçeneği, Padly AI hesabınızı ve tüm sohbetlerinizi kalıcı olarak siler. Görevleriniz ve notlarınız bu işlemden etkilenmez.</li>
+                        <li><strong>Tüm verileri silme:</strong> Ayarlar'daki "Tüm Verileri Sil" seçeneği, cihazınızdaki ve iCloud'daki tüm görev geçmişinizi, ayrıca Padly AI hesabınızı ve sohbetlerinizi kalıcı olarak siler.</li>
+                    </ul>
+                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs space-y-1">
+                        <p>Uygulama İçi Yol: Ayarlar (Çark Simgesi) → "Tüm Verileri Sil"</p>
+                        <p>Yalnızca Padly AI: Padly AI → Önceki Sohbetler → "Padly AI Verilerimi Sil"</p>
+                    </div>
+                    <p>Silme işlemleri geri alınamaz. Uygulamaya erişemiyorsanız silme talebinizi aşağıdaki e-posta adresine iletebilirsiniz.</p>
+
+                    <h2>5. Üçüncü Taraf Analitik ve Reklamlar</h2>
                     <p>
-                        Padly içerisinde üçüncü taraf reklam ağları veya kullanıcı hareketlerini izleyen analitik yazılımları kesinlikle bulunmamaktadır.
+                        Padly içerisinde üçüncü taraf reklam ağları veya kullanıcı hareketlerini izleyen analitik yazılımları bulunmamaktadır. Verileriniz reklam hedeflemesi veya profilleme için kullanılmaz.
                     </p>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">5. İletişim</h2>
+                    <h2>6. Politika Değişiklikleri</h2>
+                    <p>Bu politikayı zaman zaman güncelleyebiliriz. Güncel sürüm her zaman bu sayfada yayımlanır ve sayfanın başındaki tarih yenilenir. Padly AI'da verilerinizin işlenme biçimini etkileyen önemli bir değişiklik olması hâlinde uygulama içinde onayınız yeniden istenir.</p>
+
+                    <h2>7. İletişim</h2>
                     <p>
-                        Sorularınız için bizimle iletişime geçebilirsiniz:
+                        Sorularınız ve veri talepleriniz için bizimle iletişime geçebilirsiniz:
                         <a href="mailto:yadatechnologiesofficial@gmail.com" class="text-blue-600 dark:text-blue-400 underline font-medium">yadatechnologiesofficial@gmail.com</a>
                     </p>
                 </div>
@@ -168,98 +269,195 @@
         </main>
 
         <!-- ==================== ENGLISH PRIVACY POLICY ==================== -->
-        <main id="en" class="content-section">
+        <main id="en" class="content-section" lang="en">
             <div class="paper-card p-6 sm:p-8 mb-8">
                 <div class="flex items-center gap-3 border-b border-stone-200/80 dark:border-zinc-800 pb-5 mb-6">
                     <img src="logo.png" alt="Padly Logo" class="w-10 h-10 rounded-xl border border-black/5 dark:border-white/10 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/2563EB/ffffff?text=Padly';">
                     <div>
                         <h1 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight">Privacy Policy</h1>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Last Updated: August 16, 2026</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Last Updated: October 14, 2026</p>
                     </div>
                 </div>
 
-                <div class="text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
+                <div class="policy text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
                     <p>
                         At <strong>Padly</strong>, your privacy is our primary commitment. Our app is designed around a strict "Privacy First" standard.
                     </p>
 
-                    <div class="p-4 bg-stone-100 dark:bg-zinc-800/60 rounded-xl border border-stone-200 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 text-xs font-medium">
-                        <strong>In Short:</strong> Padly never uploads your data to external servers, never tracks you for advertising, and never sells data. Your tasks remain solely on your device and inside your Apple iCloud storage.
+                    <div class="p-4 bg-stone-100 dark:bg-zinc-800/60 rounded-xl border border-stone-200 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 text-xs font-medium leading-relaxed">
+                        <strong>In Short:</strong> Your tasks are stored only on your device and in your personal Apple iCloud account. Padly shows no ads, does not track you and never sells your data. Only when you use the optional <strong>Padly AI</strong> feature are your question and the related task details shared with our AI service provider so that an answer can be generated, and your chats are stored in our database. You can delete this data at any time.
                     </div>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">1. Data Collection & Usage</h2>
-                    <p>Padly enables users to organize daily tasks and strike off completed items with hand-drawing gestures.</p>
-                    <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
-                        <li><strong>Task Content:</strong> Your task texts are stored solely for core app functionality inside your personal Apple iCloud storage.</li>
-                        <li><strong>No Registration Required:</strong> The app relies on Apple's native device infrastructure without requiring membership, email, or passwords.</li>
+                    <h2>1. Data Collection & Usage</h2>
+                    <p>Padly enables users to organize daily tasks, plan their day and strike off completed items with hand-drawing gestures.</p>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><strong>Task Content:</strong> The tasks, notes and drawings you create are stored solely for core app functionality, on your device and in your personal iCloud account.</li>
+                        <li><strong>No Registration Required:</strong> No membership, email address or password is requested. The app relies on the Apple ID and iCloud already set up on your device.</li>
+                        <li><strong>Padly AI Data:</strong> Collected only if you use the Padly AI feature. See Section 3 for details.</li>
                     </ul>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">2. Apple iCloud Syncing</h2>
+                    <h2>2. Apple iCloud Storage & Syncing</h2>
                     <p>
-                        To keep tasks synced across your Apple devices, Padly utilizes Apple's official <strong>iCloud (CloudKit)</strong> framework. These entries are protected by Apple's end-to-end encryption.
+                        To keep tasks synced across your Apple devices, Padly uses Apple's official <strong>iCloud (CloudKit)</strong> framework. This data is stored encrypted by Apple in the private database tied to your iCloud account; we have no access to it.
                     </p>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">3. Complete Data Deletion</h2>
-                    <p>You retain total control over your data and can purge all task history at any time:</p>
-                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs">
-                        In-App Path: Settings → "Delete All Data"
+                    <h2 id="padly-ai-en">3. Padly AI (AI Assistant)</h2>
+                    <div class="ai-block space-y-4">
+                        <p class="text-xs font-semibold text-blue-800 dark:text-blue-200">
+                            This section applies only if you use the Padly AI feature. As long as you do not use it, none of your data leaves your device and your iCloud account.
+                        </p>
+
+                        <div>
+                            <h3>Explicit consent</h3>
+                            <p>Padly AI is optional and requires you to accept the in-app notice before first use. If you do not consent, the feature stays off and none of the data below is processed.</p>
+                        </div>
+
+                        <div>
+                            <h3>Data we process</h3>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>The questions you write to Padly AI and the answers you receive,</li>
+                                <li>The tasks on the page that is open at that moment (title, steps, priority, reminder and any AI note saved on the task),</li>
+                                <li>Your earlier chats with Padly AI,</li>
+                                <li>An anonymous user identifier that contains neither your name, email address nor phone number; your consent record, your daily usage count and your app language.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3>Purpose and sharing</h3>
+                            <p>This data is processed solely to provide the app's functionality and to offer you a better, personalized service. It is transmitted to our AI service provider over a secure (encrypted) connection so that the answer can be generated, and it is stored in our cloud database so that your chat history can be shown to you. Your data is not used for advertising, is not sold and is not shared with third parties for any other purpose. Our service providers may process this data on servers located outside your country.</p>
+                        </div>
+
+                        <div>
+                            <h3>Retention</h3>
+                            <p>Your chats are kept only until you delete them, so that you can continue earlier conversations. Every chat you delete is permanently removed from our servers.</p>
+                        </div>
+
+                        <div>
+                            <h3>Please note</h3>
+                            <p>AI can produce incorrect or incomplete answers. Please do not enter sensitive information such as passwords, health or financial details in your questions.</p>
+                        </div>
                     </div>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">4. Third-Party Analytics & Ads</h2>
-                    <p>Padly contains no third-party ad networks and no behavioral tracking analytics software.</p>
+                    <h2>4. Your Right to Delete Your Data</h2>
+                    <p>You retain full control over your data. At any time and without giving a reason, you can do the following from within the app:</p>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><strong>Delete a single chat:</strong> In Padly AI → Previous Chats, delete the chat in question. It is permanently removed from our servers.</li>
+                        <li><strong>Delete all chats and your Padly AI account:</strong> "Delete My Padly AI Data" on the Padly AI → Previous Chats screen permanently deletes your Padly AI account together with all your chats. Your tasks and notes are not affected.</li>
+                        <li><strong>Delete everything:</strong> "Delete All Data" in Settings permanently deletes all task history on your device and in iCloud, as well as your Padly AI account and chats.</li>
+                    </ul>
+                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs space-y-1">
+                        <p>In-App Path: Settings → "Delete All Data"</p>
+                        <p>Padly AI only: Padly AI → Previous Chats → "Delete My Padly AI Data"</p>
+                    </div>
+                    <p>Deletion cannot be undone. If you cannot access the app, you may send your deletion request to the email address below.</p>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">5. Contact Information</h2>
+                    <h2>5. Third-Party Analytics & Ads</h2>
+                    <p>Padly contains no third-party ad networks and no behavioral tracking analytics software. Your data is not used for ad targeting or profiling.</p>
+
+                    <h2>6. Changes to This Policy</h2>
+                    <p>We may update this policy from time to time. The current version is always published on this page, with the date at the top updated. If a material change affects how your data is processed in Padly AI, your consent will be requested again in the app.</p>
+
+                    <h2>7. Contact Information</h2>
                     <p>
-                        Inquiries can be directed to: <a href="mailto:yadatechnologiesofficial@gmail.com" class="text-blue-600 dark:text-blue-400 underline font-medium">yadatechnologiesofficial@gmail.com</a>
+                        Questions and data requests can be directed to:
+                        <a href="mailto:yadatechnologiesofficial@gmail.com" class="text-blue-600 dark:text-blue-400 underline font-medium">yadatechnologiesofficial@gmail.com</a>
                     </p>
                 </div>
             </div>
         </main>
 
         <!-- ==================== GERMAN PRIVACY POLICY ==================== -->
-        <main id="de" class="content-section">
+        <main id="de" class="content-section" lang="de">
             <div class="paper-card p-6 sm:p-8 mb-8">
                 <div class="flex items-center gap-3 border-b border-stone-200/80 dark:border-zinc-800 pb-5 mb-6">
                     <img src="logo.png" alt="Padly Logo" class="w-10 h-10 rounded-xl border border-black/5 dark:border-white/10 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/2563EB/ffffff?text=Padly';">
                     <div>
                         <h1 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight">Datenschutzerklärung</h1>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Zuletzt aktualisiert: 16. August 2026</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Zuletzt aktualisiert: 14. Oktober 2026</p>
                     </div>
                 </div>
 
-                <div class="text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
+                <div class="policy text-xs sm:text-sm leading-relaxed space-y-5 text-zinc-700 dark:text-zinc-300">
                     <p>
                         Bei <strong>Padly</strong> hat der Schutz Ihrer persönlichen Daten höchste Priorität. Unsere Anwendung wurde strikt nach dem Prinzip "Privacy First" (Datenschutz an erster Stelle) entwickelt.
                     </p>
 
-                    <div class="p-4 bg-stone-100 dark:bg-zinc-800/60 rounded-xl border border-stone-200 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 text-xs font-medium">
-                        <strong>Zusammenfassung:</strong> Padly lädt Ihre Daten niemals auf externe Server hoch, betreibt keine Werbenachverfolgung und gibt keine Daten an Dritte weiter. Alle Ihre Aufgaben verbleiben ausschließlich auf Ihrem Gerät und in Ihrem persönlichen Apple iCloud-Konto.
+                    <div class="p-4 bg-stone-100 dark:bg-zinc-800/60 rounded-xl border border-stone-200 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 text-xs font-medium leading-relaxed">
+                        <strong>Zusammenfassung:</strong> Ihre Aufgaben werden ausschließlich auf Ihrem Gerät und in Ihrem persönlichen Apple-iCloud-Konto gespeichert. Padly zeigt keine Werbung, verfolgt Sie nicht und verkauft Ihre Daten nicht. Nur wenn Sie die optionale Funktion <strong>Padly AI</strong> nutzen, werden Ihre Frage und die zugehörigen Aufgabendaten an unseren KI-Dienstleister übermittelt, damit eine Antwort erzeugt werden kann, und Ihre Chats werden in unserer Datenbank gespeichert. Diese Daten können Sie jederzeit löschen.
                     </div>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">1. Erhobene Daten und Verwendungszweck</h2>
-                    <p>Padly ermöglicht es Benutzern, tägliche To-Do-Listen zu erstellen, persönliche Pläne zu verwalten und erledigte Aufgaben manuell durchzustreichen.</p>
-                    <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
-                        <li><strong>Aufgabeninhalte:</strong> Die von Ihnen erstellten Aufgabentexte werden ausschließlich zur Bereitstellung der App-Funktionen in Ihrem persönlichen iCloud-Konto gespeichert.</li>
-                        <li><strong>Kontoinformationen:</strong> Es ist keine Registrierung, E-Mail-Adresse oder Passwort erforderlich. Die App nutzt die bestehende Apple ID- und iCloud-Infrastruktur Ihres Geräts.</li>
+                    <h2>1. Erhobene Daten und Verwendungszweck</h2>
+                    <p>Padly ermöglicht es Benutzern, tägliche To-do-Listen zu erstellen, persönliche Pläne zu verwalten und erledigte Aufgaben von Hand durchzustreichen.</p>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><strong>Aufgabeninhalte:</strong> Die von Ihnen erstellten Aufgaben, Notizen und Zeichnungen werden ausschließlich zur Bereitstellung der App-Funktionen auf Ihrem Gerät und in Ihrem persönlichen iCloud-Konto gespeichert.</li>
+                        <li><strong>Kontoinformationen:</strong> Es sind weder Registrierung noch E-Mail-Adresse oder Passwort erforderlich. Die App nutzt die bestehende Apple-ID- und iCloud-Infrastruktur Ihres Geräts.</li>
+                        <li><strong>Padly-AI-Daten:</strong> Werden nur erhoben, wenn Sie die Funktion Padly AI nutzen. Einzelheiten finden Sie in Abschnitt 3.</li>
                     </ul>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">2. Apple iCloud-Speicherung und Synchronisierung</h2>
+                    <h2>2. Apple-iCloud-Speicherung und Synchronisierung</h2>
                     <p>
-                        Um Ihre Aufgaben zwischen Ihren Apple-Geräten zu synchronisieren, wird die offizielle <strong>iCloud (CloudKit)</strong>-Infrastruktur von Apple verwendet. Diese Daten werden auf den durch Ende-zu-Ende-Verschlüsselung geschützten Servern von Apple gespeichert.
+                        Um Ihre Aufgaben zwischen Ihren Apple-Geräten zu synchronisieren, wird die offizielle <strong>iCloud (CloudKit)</strong>-Infrastruktur von Apple verwendet. Diese Daten werden von Apple verschlüsselt in der privaten Datenbank Ihres iCloud-Kontos gespeichert; wir haben keinen Zugriff darauf.
                     </p>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">3. Recht auf vollständige Datenlöschung</h2>
-                    <p>Sie können jederzeit alle Ihre Daten und den Aufgabenverlauf vollständig und dauerhaft löschen:</p>
-                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs">
-                        In-App-Pfad: Einstellungen → "Alle Daten löschen"
+                    <h2 id="padly-ai-de">3. Padly AI (KI-Assistent)</h2>
+                    <div class="ai-block space-y-4">
+                        <p class="text-xs font-semibold text-blue-800 dark:text-blue-200">
+                            Dieser Abschnitt gilt nur, wenn Sie die Funktion Padly AI nutzen. Solange Sie diese nicht verwenden, verlassen keine Ihrer Daten Ihr Gerät und Ihr iCloud-Konto.
+                        </p>
+
+                        <div>
+                            <h3>Ausdrückliche Einwilligung</h3>
+                            <p>Padly AI ist optional und setzt voraus, dass Sie vor der ersten Nutzung dem in der App angezeigten Hinweis zustimmen. Ohne Ihre Einwilligung bleibt die Funktion deaktiviert und keine der unten genannten Daten werden verarbeitet.</p>
+                        </div>
+
+                        <div>
+                            <h3>Verarbeitete Daten</h3>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Die Fragen, die Sie an Padly AI richten, und die Antworten, die Sie erhalten,</li>
+                                <li>Die Aufgaben der zu diesem Zeitpunkt geöffneten Seite (Titel, Schritte, Priorität, Erinnerung und eine zur Aufgabe gespeicherte KI-Notiz),</li>
+                                <li>Ihre früheren Chats mit Padly AI,</li>
+                                <li>Eine anonyme Nutzerkennung, die weder Ihren Namen noch Ihre E-Mail-Adresse oder Telefonnummer enthält; der Nachweis Ihrer Einwilligung, die Anzahl Ihrer täglichen Anfragen und Ihre App-Sprache.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3>Zweck und Weitergabe</h3>
+                            <p>Diese Daten werden ausschließlich verarbeitet, um die Funktionen der App bereitzustellen und Ihnen einen besseren, persönlichen Service zu bieten. Sie werden über eine sichere (verschlüsselte) Verbindung an unseren KI-Dienstleister übermittelt, damit die Antwort erzeugt werden kann, und in unserer Cloud-Datenbank gespeichert, damit Ihnen Ihr Chatverlauf angezeigt werden kann. Ihre Daten werden nicht für Werbung verwendet, nicht verkauft und zu keinem anderen Zweck an Dritte weitergegeben. Unsere Dienstleister können diese Daten auf Servern außerhalb Ihres Landes verarbeiten.</p>
+                        </div>
+
+                        <div>
+                            <h3>Speicherdauer</h3>
+                            <p>Ihre Chats werden nur so lange gespeichert, bis Sie sie löschen, damit Sie frühere Unterhaltungen fortsetzen können. Jeder von Ihnen gelöschte Chat wird dauerhaft von unseren Servern entfernt.</p>
+                        </div>
+
+                        <div>
+                            <h3>Bitte beachten Sie</h3>
+                            <p>KI kann fehlerhafte oder unvollständige Antworten erzeugen. Bitte geben Sie in Ihren Fragen keine sensiblen Informationen wie Passwörter, Gesundheits- oder Finanzdaten ein.</p>
+                        </div>
                     </div>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">4. Keine Werbenetzwerke oder Tracking-Analysen</h2>
-                    <p>In Padly gibt es keinerlei Werbenetzwerke von Drittanbietern oder Analyse-Software zur Verfolgung von Benutzeraktivitäten.</p>
+                    <h2>4. Recht auf Löschung Ihrer Daten</h2>
+                    <p>Sie behalten die volle Kontrolle über Ihre Daten. Jederzeit und ohne Angabe von Gründen können Sie in der App Folgendes tun:</p>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><strong>Einzelnen Chat löschen:</strong> Unter Padly AI → „Frühere Chats“ können Sie den betreffenden Chat löschen. Er wird dauerhaft von unseren Servern entfernt.</li>
+                        <li><strong>Alle Chats und den Padly-AI-Account löschen:</strong> Die Option „Meine Padly-AI-Daten löschen“ unter Padly AI → „Frühere Chats“ löscht Ihren Padly-AI-Account und alle Ihre Chats dauerhaft. Ihre Aufgaben und Notizen bleiben davon unberührt.</li>
+                        <li><strong>Alle Daten löschen:</strong> Die Option „Alle Daten löschen“ in den Einstellungen löscht dauerhaft den gesamten Aufgabenverlauf auf Ihrem Gerät und in iCloud sowie Ihren Padly-AI-Account und Ihre Chats.</li>
+                    </ul>
+                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg text-blue-900 dark:text-blue-200 font-medium text-xs space-y-1">
+                        <p>In-App-Pfad: Einstellungen → „Alle Daten löschen“</p>
+                        <p>Nur Padly AI: Padly AI → „Frühere Chats“ → „Meine Padly-AI-Daten löschen“</p>
+                    </div>
+                    <p>Die Löschung kann nicht rückgängig gemacht werden. Falls Sie keinen Zugriff auf die App haben, können Sie Ihren Löschantrag an die unten genannte E-Mail-Adresse senden.</p>
 
-                    <h2 class="text-sm font-bold text-zinc-900 dark:text-white pt-2 border-t border-stone-200/80 dark:border-zinc-800">5. Kontakt</h2>
+                    <h2>5. Keine Werbenetzwerke oder Tracking-Analysen</h2>
+                    <p>In Padly gibt es keinerlei Werbenetzwerke von Drittanbietern oder Analyse-Software zur Verfolgung von Benutzeraktivitäten. Ihre Daten werden nicht für zielgerichtete Werbung oder Profilbildung verwendet.</p>
+
+                    <h2>6. Änderungen dieser Erklärung</h2>
+                    <p>Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Die aktuelle Fassung wird stets auf dieser Seite veröffentlicht, und das Datum oben wird angepasst. Bei einer wesentlichen Änderung der Datenverarbeitung in Padly AI wird Ihre Einwilligung in der App erneut eingeholt.</p>
+
+                    <h2>7. Kontakt</h2>
                     <p>
-                        Bei Fragen können Sie uns jederzeit per E-Mail kontaktieren:
+                        Bei Fragen und Anliegen zu Ihren Daten können Sie uns jederzeit per E-Mail kontaktieren:
                         <a href="mailto:yadatechnologiesofficial@gmail.com" class="text-blue-600 dark:text-blue-400 underline font-medium">yadatechnologiesofficial@gmail.com</a>
                     </p>
                 </div>
@@ -273,36 +471,63 @@
     </div>
 
     <script>
+        const STRINGS = {
+            tr: { pageTitle: 'Gizlilik Politikası - Padly', back: 'Ana Sayfaya Dön', themeLabel: 'Açık / koyu tema', aiAnchor: 'padly-ai' },
+            en: { pageTitle: 'Privacy Policy - Padly', back: 'Back to Home', themeLabel: 'Light / dark theme', aiAnchor: 'padly-ai-en' },
+            de: { pageTitle: 'Datenschutzerklärung - Padly', back: 'Zurück zur Startseite', themeLabel: 'Helles / dunkles Design', aiAnchor: 'padly-ai-de' }
+        };
+
+        // privacy.html#padly-ai opens the Padly AI section in whichever language is shown
+        const wantsAiSection = window.location.hash.indexOf('#padly-ai') === 0;
+
         function setLanguage(lang) {
+            if (!STRINGS[lang]) lang = 'en';
+            const s = STRINGS[lang];
+
             document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-pressed', 'false');
+            });
 
             const targetSection = document.getElementById(lang);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
+            if (targetSection) targetSection.classList.add('active');
 
             const activeBtn = document.querySelector('.' + lang + '-btn');
             if (activeBtn) {
                 activeBtn.classList.add('active');
+                activeBtn.setAttribute('aria-pressed', 'true');
             }
 
-            const backBtnText = document.getElementById('backBtnText');
-            if (lang === 'tr') backBtnText.innerText = "Ana Sayfaya Dön";
-            else if (lang === 'de') backBtnText.innerText = "Zurück zur Startseite";
-            else backBtnText.innerText = "Back to Home";
+            document.documentElement.lang = lang;
+            document.title = s.pageTitle;
+            document.getElementById('backBtnText').innerText = s.back;
+            document.getElementById('theme-toggle').setAttribute('aria-label', s.themeLabel);
+
+            try { localStorage.setItem('padly-lang', lang); } catch (e) {}
+            return s;
         }
 
         function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.toggle('dark');
+            try { localStorage.setItem('padly-theme', isDark ? 'dark' : 'light'); } catch (e) {}
         }
 
-        window.onload = function() {
-            const userLang = navigator.language || navigator.userLanguage;
-            if (userLang.startsWith('de')) setLanguage('de');
-            else if (userLang.startsWith('tr')) setLanguage('tr');
-            else setLanguage('en');
-        };
+        window.addEventListener('load', function () {
+            // Saved choice first, otherwise the browser language
+            let lang = null;
+            try { lang = localStorage.getItem('padly-lang'); } catch (e) {}
+            if (!lang) {
+                const userLang = navigator.language || navigator.userLanguage || 'en';
+                lang = userLang.startsWith('de') ? 'de' : userLang.startsWith('tr') ? 'tr' : 'en';
+            }
+            const s = setLanguage(lang);
+
+            if (wantsAiSection) {
+                const section = document.getElementById(s.aiAnchor);
+                if (section) section.scrollIntoView();
+            }
+        });
     </script>
 </body>
 </html>
